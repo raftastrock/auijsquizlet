@@ -1,60 +1,129 @@
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
-	<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
-</head>
-<body>
-	<div id="todos">
-		<h3>Drag the list items the the appropriate spot.</h3>
-		<ol>
-			<li id="1">First item to be understood.</li>
-			<li id="2">Second item to be understood.</li>
-			<li id="4">Fourth item to be understood.</li>
-			<li id="3">Third item to be understood.</li>
-			<li id="5">Fifth item to be understood.</li>
-		</ol>
-		<input type="submit" class="btn" value="Check Order" />
-	</div>
-	<script>
-		YUI().use(
-			'aui-button',
-			'aui-sortable-list',
-			'node',
-			function (Y) {
-				new Y.SortableList(
-					{
-						dropCondition: function(event) {
-							return true;
-						},
-						dropOn: 'todos',
-						nodes: '#todos li',
-					}
-				);
-				var check = '1,2,3,4,5';
-				var node = Y.one('.btn');
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+	</head>
+	<body>
+		<div id="todos" class="content">
+			<div id="page1">
+				<h3>Drag the list items to the appropriate spot.</h3>
+				<ol>
+					<li id="1">First item to be understood.</li>
+					<li id="2">Second item to be understood.</li>
+					<li id="4">Fourth item to be understood.</li>
+					<li id="3">Third item to be understood.</li>
+					<li id="5">Fifth item to be understood.</li>
+				</ol>
+				<input type="submit" class="btn" value="Check Order" />
+			</div>
 
-				node.on(
-					'click',
-					function() {
-						var lis =Y.all('li');
-						var seven = lis.getAttribute('id').toString();
-						console.log(seven); //for test purposes
-						console.log(check); //
-						
-						if (check == seven) 
-							{
-								lis.setStyles(
-									{
-										backgroundColor: 'lightBlue',
-										color: 'green'
+			<div id="page2" style="display: none">
+				Random Content2.
+			</div>
+
+			<div id="page3" style="display: none">
+				Random Content3.
+			</div>
+
+			<div id="page4" style="display: none">
+				Random Content4
+			</div>
+
+		
+		</div>
+		<div id="pagination" class="pagination pagination-centered">
+			<ul class="pagination-content">
+				<li><a href="#">Prev</a></li>
+
+				<li><a href="#">Next</a></li>
+			</ul>
+		</div>
+		<script>
+			YUI().use(
+				'aui-button',
+				'aui-pagination',
+				'aui-sortable-list',
+				'node',
+				function (Y) {
+					var pages = Y.all('.content div');
+					// pages.setStyle('display', 'none')
+					new Y.Pagination(
+						{
+							boundingBox: '#pagination',
+							circular: false,
+							contentBox: '#pagination .pagination-content',
+							on: {
+								changeRequest: function(event) {
+									var instance = this,
+										state = event.state,
+										lastState = event.lastState;
+
+									if (lastState) {
+										pages.item(lastState.page - 1).setStyle('display', 'none');
 									}
-								);
-							}
+
+									pages.item(state.page - 1).setStyle('display', 'block');
+								}
+							},
+							page: 1
 						}
-					)
+					).render();
+
+					var gen = Y.all('.content > div');
+					nodegen = gen.getDOMNodes().length; //getting number of <div> immediately under .content
+					console.log(nodegen);
+
+					var startgen = Y.one('.pagination-content li');
+					for (var i = 1; i <= nodegen; i++) {
+						var apfooli = Y.Node.create('<li />');
+						var apfoolia = Y.Node.create('<a />');
+						apfoolia.set('href', '#');
+						apfoolia.setHTML(Number(i));
+						apfoolia.wrap('<li />');
+						startgen.append(apfoolia);
+						console.log(apfoolia);
+					};
+
+					new Y.SortableList(
+						{
+							dropCondition: function(event) {
+								return true;
+							},
+							dropOn: 'page1',
+							nodes: '#page1 li',
+						}
+					);
+					var check = '1,2,3,4,5';
+					var node = Y.one('.btn');
+
+					node.on(
+						'click',
+						function() {
+							var lis = Y.all('#page1 li');
+							var seven = lis.getAttribute('id').toString();
+							console.log(seven); //for test purposes
+							console.log(check); //
+							
+							if (check == seven) 
+								{
+									lis.setStyles(
+										{
+											backgroundColor: 'lightBlue',
+											color: 'green'
+										}
+									);
+								}
+							else lis.setStyles(
+								{
+									backgroundColor: 'lightYellow',
+									color: 'red'
+								} 	
+							);
+						}
+					);
 				}
 			);
 		</script>
