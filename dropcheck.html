@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+	<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+</head>
+<body>
+	<div id="todos">
+		<h3>Drag the list items the the appropriate spot.</h3>
+		<ol>
+			<li id="1">First item to be understood.</li>
+			<li id="2">Second item to be understood.</li>
+			<li id="4">Fourth item to be understood.</li>
+			<li id="3">Third item to be understood.</li>
+			<li id="5">Fifth item to be understood.</li>
+		</ol>
+		<input type="submit" class="btn" value="Check Order" />
+	</div>
+	<script>
+		YUI().use(
+			'aui-button',
+			'aui-sortable-list',
+			'node',
+			function (Y) {
+				new Y.SortableList(
+					{
+						dropCondition: function(event) {
+							return true;
+						},
+						dropOn: 'todos',
+						nodes: '#todos li',
+					}
+				);
+				var check = '1,2,3,4,5';
+				var node = Y.one('.btn');
+
+				node.on(
+					'click',
+					function() {
+						var lis =Y.all('li');
+						var seven = lis.getAttribute('id').toString();
+						console.log(seven); //for test purposes
+						console.log(check); //
+						
+						if (check == seven) 
+							{
+								lis.setStyles(
+									{
+										backgroundColor: 'lightBlue',
+										color: 'green'
+									}
+								);
+							}
+						}
+					)
+				}
+			);
+		</script>
+	</body>
+</html>
+

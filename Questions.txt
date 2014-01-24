@@ -1,0 +1,73 @@
+Questions
+
+Question 1:
+	Using AlloyUI, how would you make all the list items in a page have a green background?
+
+-Answer 
+	<script>
+		YUI().use(
+			'node',
+			function(Y) {
+				var foo = Y.all('li');
+				foo.setStyles(
+					{
+						backgroundColor: 'green'
+					}
+				);
+			}
+		);
+	</script>
+
+Question 2:
+	What is missing from this page to prevent AlloyUI's form-validator from working?
+	<!doctype html>
+	<html>
+		<head></head>
+		<body>
+			<div>
+				<h1>There's plenty of room in Texas, you know?</h1>
+				<input class="field-required" name="text" placeholder="Insert your clever reply here." style="width: 80%" type="text"/>
+				<br />
+				<input class="btn" type="submit" value="Booyah!" />
+			</div>
+		</body>
+	</html>
+
+-Answer
+	Standard practice says that the <head> portion should have links to Alloy UI's script bases. Remember these?:
+		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+	Also <form> is needed before the input areas which are to be validated.
+
+Question 3:
+	How do you make use of a module's method?
+
+-Answer
+	Use dot notation, for example: within the 'node' module, if you have  "var foo = Y.one('selector');" you can use the node module of setHTML by writing it like this: foo.setHTML(<string or otherwise in put here>)
+
+Question 4:
+	What does AJAX stand for and how is it used?
+
+-Answer
+	AJAX stands for Asynchronous JavaScript and XML. It is used to exchange information between server and client without requiring a page to be refreshed/reloaded. On-demand information pulling/pushing. For further information, here's the wikipedia article: http://en.wikipedia.org/wiki/Ajax_(programming)
+
+Question 5:
+	What two characters aren't allowed in JSON structures (except with qualifiers)?
+
+-Answer
+	\ and "
+	To properly use these you must preface them with a '\'. Some ways to write special characters also necessitate using the \ such as \n for newline, \r for a return and \t for tab. More information on json notation and formats can be found at http://json.org
+
+Question 6:
+	What is a resource you can check to see how an AUI module works?
+
+-Answer
+	Check at http://alloyui.com/api/  This is the go-to place for reading both modules and classes handled by AlloyUI. Requires an understanding of "methods" "properties" and "events". Much of the information is DOM related.
+
+Question 7:
+	What is the difference between "Y.Node.create('<div />')" and "node.setHTML('<div />')"
+
+-Answer
+	The first "Y.Node.create('<div />')" is for creating a new code, and is usually assigned to a variable. 
+	e.g. var node = Y.Node.create('<div />') 
+	whereas node.setHTML('<div />') is for setting HTML code to something, it will overwrite whatever is there previously! A A good two hit combo in the 'node' module is first creating, then filling in with the .setHTML().
