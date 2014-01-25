@@ -31,7 +31,6 @@
 			<div id="page4" style="display: none">
 				Random Content4
 			</div>
-
 		
 		</div>
 		<div id="pagination" class="pagination pagination-centered">
@@ -47,7 +46,21 @@
 				'aui-pagination',
 				'aui-sortable-list',
 				'node',
+				'escape',
 				function (Y) {
+					var gen = Y.all('.content > div');
+					contentcount = gen.getDOMNodes().length; //getting number of <div> immediately under .content
+
+					var startgen = Y.one('.pagination-content li');
+					for (var i = contentcount ; i > 0; i--) {
+						var p = Y.Node.create('<li />');
+						var q = Y.Node.create('<a />');
+							q.set('href', '#');
+							q.setHTML(Number(i));
+						p.setHTML(q);
+						startgen.placeAfter(p);
+					};
+
 					var pages = Y.all('.content div');
 					// pages.setStyle('display', 'none')
 					new Y.Pagination(
@@ -71,21 +84,6 @@
 							page: 1
 						}
 					).render();
-
-					var gen = Y.all('.content > div');
-					nodegen = gen.getDOMNodes().length; //getting number of <div> immediately under .content
-					console.log(nodegen);
-
-					var startgen = Y.one('.pagination-content li');
-					for (var i = 1; i <= nodegen; i++) {
-						var apfooli = Y.Node.create('<li />');
-						var apfoolia = Y.Node.create('<a />');
-						apfoolia.set('href', '#');
-						apfoolia.setHTML(Number(i));
-						apfoolia.wrap('<li />');
-						startgen.append(apfoolia);
-						console.log(apfoolia);
-					};
 
 					new Y.SortableList(
 						{
