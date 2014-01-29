@@ -7,6 +7,14 @@
 		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 	</head>
 	<body>
+		<div id="pagination" class="pagination pagination-centered">
+			<ul class="pagination-content">
+				<li><a href="#">Prev</a></li>
+
+				<li><a href="#">Next</a></li>
+			</ul>
+		</div>
+
 		<div id="todos" class="content">
 			<div id="page1">
 				<h3>Drag the list items to the appropriate spot.</h3>
@@ -21,48 +29,42 @@
 			</div>
 
 			<div id="page2" style="display: none">
-				Random Content2.
+				<h3>Random Content2.</h3>
 			</div>
 
 			<div id="page3" style="display: none">
-				Random Content3.
+				<h3>Random Content3.</h3>
 			</div>
 
 			<div id="page4" style="display: none">
-				Random Content4
+				<h3>Random Content4.</h3>
 			</div>
-		
 		</div>
-		<div id="pagination" class="pagination pagination-centered">
-			<ul class="pagination-content">
-				<li><a href="#">Prev</a></li>
 
-				<li><a href="#">Next</a></li>
-			</ul>
-		</div>
 		<script>
+			"use strict";
+
 			YUI().use(
 				'aui-button',
 				'aui-pagination',
 				'aui-sortable-list',
 				'node',
-				'escape',
 				function (Y) {
 					var gen = Y.all('.content > div');
+					var contentcount = null;
 					contentcount = gen.getDOMNodes().length; //getting number of <div> immediately under .content
 
 					var startgen = Y.one('.pagination-content li');
-					for (var i = contentcount ; i > 0; i--) {
+					for (var i = contentcount; i > 0; i--) {
 						var p = Y.Node.create('<li />');
 						var q = Y.Node.create('<a />');
 							q.set('href', '#');
 							q.setHTML(Number(i));
 						p.setHTML(q);
 						startgen.placeAfter(p);
-					};
+					}
 
 					var pages = Y.all('.content div');
-					// pages.setStyle('display', 'none')
 					new Y.Pagination(
 						{
 							boundingBox: '#pagination',
@@ -91,21 +93,21 @@
 								return true;
 							},
 							dropOn: 'page1',
-							nodes: '#page1 li',
+							nodes: '#page1 li'
 						}
 					);
+
 					var check = '1,2,3,4,5';
 					var node = Y.one('.btn');
-
 					node.on(
 						'click',
 						function() {
 							var lis = Y.all('#page1 li');
 							var seven = lis.getAttribute('id').toString();
-							console.log(seven); //for test purposes
-							console.log(check); //
+							console.log(seven);//for test purposes
+							console.log(check);
 							
-							if (check == seven) 
+							if (check == seven)
 								{
 									lis.setStyles(
 										{
@@ -114,12 +116,14 @@
 										}
 									);
 								}
-							else lis.setStyles(
-								{
-									backgroundColor: 'lightYellow',
-									color: 'red'
-								} 	
-							);
+							else {
+								lis.setStyles(
+									{
+										backgroundColor: 'lightYellow',
+										color: 'red'
+									}
+								);
+							}
 						}
 					);
 				}

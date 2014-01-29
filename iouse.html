@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+		<script src="file.json" name="obj"></script>
+	</head>
+
+	<body>
+		<div id="pagination" class="pagination pagination-centered">
+			<ul class="pagination-content">
+				<li><a href="#">Prev</a></li>
+
+				<li><a href="#">Next</a></li>
+			</ul>
+		</div>
+		<div id="todos" class="content">
+
+		</div>
+	</body>
+
+	<script>
+	"use strict";
+	YUI().use(
+		'aui-node',
+		'aui-pagination',
+		'aui-button',
+		function(Y) {
+
+			for (var i = 1; obj.questions[i]; i++) 
+			{
+				var startdiv = Y.one('#todos');
+				var adddiv = Y.Node.create('<div />');
+				var addh3 = Y.Node.create('<h3 />');
+				addh3.setHTML(obj.questions[i].title);
+				console.log(addh3);
+				adddiv.set('id','page'+i);
+				adddiv.setStyle('display','none');
+				adddiv.setHTML(addh3);
+				startdiv.appendChild(adddiv);
+				console.log(i);
+			}
+
+			var gen = Y.all('.content > div');
+			var contentcount = null;
+			contentcount = gen.getDOMNodes().length; //getting number of <div> immediately under .content
+
+			var startgen = Y.one('.pagination-content li');
+			for (var i = contentcount; i > 0; i--) {
+				var p = Y.Node.create('<li />');
+				var q = Y.Node.create('<a />');
+					q.set('href', '#');
+					q.setHTML(Number(i));
+				p.setHTML(q);
+				startgen.placeAfter(p);
+			}
+
+			var pages = Y.all('.content div');
+			new Y.Pagination(
+				{
+					boundingBox: '#pagination',
+					circular: false,
+					contentBox: '#pagination .pagination-content',
+					on: {
+						changeRequest: function(event) {
+							var instance = this,
+								state = event.state,
+								lastState = event.lastState;
+
+							if (lastState) {
+								pages.item(lastState.page - 1).setStyle('display', 'none');
+							}
+
+							pages.item(state.page - 1).setStyle('display', 'block');
+						}
+					},
+					page: 1
+				}
+			).render();
+		}
+	);
+	console.log(obj.questions[3].title);
+	</script>
+</html>
