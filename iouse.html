@@ -52,9 +52,15 @@
 								addli.set('id',j+1);
 								addli.setHTML(obj.questions[i].data[j]);
 								startol.appendChild(addli);
-								startol.set('id',obj.questions[i].key); //key by which to check correct order.
+								// startol.set('id',obj.questions[i].key); //key by which to check correct order.
 						}
 						adddiv.appendChild(startol);
+						var btn = Y.Node.create('<input />');
+							btn.set('id', obj.questions[i].key);
+							btn.setAttribute('class','btn');
+							btn.set('type','submit');
+							btn.set('value','Check!');
+							adddiv.appendChild(btn);
 						// count = count.substring(0, count.length - 1); //Adds a class equivalent to the number li
 						// startol.setAttribute('class',count);
 					}
@@ -111,12 +117,14 @@
 				}
 			);
 
-			var node = Y.one('.btn');
+			var node = Y.all('.btn');
 			node.on(
 				'click',
-				function() {
-					var check = obj.questions[node];
-					var lis = Y.all('#page1 li');
+				function(e) {
+					var cat = e.currentTarget
+					var check = cat.getAttribute('id');
+					var lis = cat.ancestor('div');
+						lis = lis.getElementsByTagName('li')
 					var seven = lis.getAttribute('id').toString();
 					console.log(seven);//for test purposes
 					console.log(check);
@@ -143,6 +151,5 @@
 
 		}
 	);
-	console.log(obj.questions[3].title);
 	</script>
 </html>
