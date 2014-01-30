@@ -8,6 +8,7 @@ var obj = {
 		"2": {
 			"title": "Drag the list items to the appropriate spot.",
 			"type": "rearrangeList",
+			"key": "1,4,3,2,5",
 			"data": [
 				"First statment.",
 				"Second statement.",
@@ -32,9 +33,16 @@ var obj = {
 			"data": ""
 		},
 		"6": {
-			"title": "Which of these statements is true?",
-			"type": "trueFalse",
-			"data": ""
+			"title": "Drag the list items to the appropriate spot.",
+			"type": "rearrangeList",
+			"key": "3,1,4,5,2",
+			"data": [
+				"First statment.",
+				"Second statement.",
+				"Third statement.",
+				"Fourth statement.",
+				"Fifth statment."
+			]
 		},
 		"7": {
 			"title": "Which of these statements is true?",

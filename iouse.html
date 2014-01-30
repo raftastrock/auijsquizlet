@@ -7,6 +7,7 @@
 	</head>
 
 	<body>
+		<p>This page requires Javascript to be viewed correctly.</p>
 		<div id="pagination" class="pagination pagination-centered">
 			<ul class="pagination-content">
 				<li><a href="#">Prev</a></li>
@@ -25,25 +26,47 @@
 		'aui-node',
 		'aui-pagination',
 		'aui-button',
+		'aui-sortable-list',
 		function(Y) {
+			var notice = Y.one('body p');
+			notice.setStyle('display','none');
 
-			for (var i = 1; obj.questions[i]; i++) 
-			{
+			// Populate content from file.json
+			for (var i = 1; obj.questions[i]; i++) {
 				var startdiv = Y.one('#todos');
 				var adddiv = Y.Node.create('<div />');
 				var addh3 = Y.Node.create('<h3 />');
-				addh3.setHTML(obj.questions[i].title);
-				console.log(addh3);
-				adddiv.set('id','page'+i);
-				adddiv.setStyle('display','none');
-				adddiv.setHTML(addh3);
-				startdiv.appendChild(adddiv);
-				console.log(i);
+					addh3.setHTML(obj.questions[i].title);
+					adddiv.set('id','page'+i);
+					adddiv.setStyle('display','none');
+					adddiv.setHTML(addh3);
+					startdiv.appendChild(adddiv);
+
+					if (obj.questions[i].type === 'rearrangeList') {
+						var startol = Y.Node.create('<ul />');
+						var count = null;
+
+						for (var j = 0; obj.questions[i].data[j]; j++) {
+							var count = count + (j+1) +',';
+							var addli = Y.Node.create('<li />');
+								addli.set('id',j+1);
+								addli.setHTML(obj.questions[i].data[j]);
+								startol.appendChild(addli);
+								startol.set('id',obj.questions[i].key); //key by which to check correct order.
+						}
+						adddiv.appendChild(startol);
+						// count = count.substring(0, count.length - 1); //Adds a class equivalent to the number li
+						// startol.setAttribute('class',count);
+					}
+
+				if (obj.questions[i].type === 'trueFalse') {
+				}
 			}
 
+			//Count content divs for pagination
 			var gen = Y.all('.content > div');
 			var contentcount = null;
-			contentcount = gen.getDOMNodes().length; //getting number of <div> immediately under .content
+				contentcount = gen.getDOMNodes().length;
 
 			var startgen = Y.one('.pagination-content li');
 			for (var i = contentcount; i > 0; i--) {
@@ -51,8 +74,8 @@
 				var q = Y.Node.create('<a />');
 					q.set('href', '#');
 					q.setHTML(Number(i));
-				p.setHTML(q);
-				startgen.placeAfter(p);
+					p.setHTML(q);
+					startgen.placeAfter(p);
 			}
 
 			var pages = Y.all('.content div');
@@ -77,6 +100,47 @@
 					page: 1
 				}
 			).render();
+
+			new Y.SortableList(
+				{
+					dropCondition: function(event) {
+						return true;
+					},
+					dropOn: '.content',
+					nodes: '.content div li'
+				}
+			);
+
+			var node = Y.one('.btn');
+			node.on(
+				'click',
+				function() {
+					var check = obj.questions[node];
+					var lis = Y.all('#page1 li');
+					var seven = lis.getAttribute('id').toString();
+					console.log(seven);//for test purposes
+					console.log(check);
+					
+					if (check == seven)
+						{
+							lis.setStyles(
+								{
+									backgroundColor: 'lightBlue',
+									color: 'green'
+								}
+							);
+						}
+					else {
+						lis.setStyles(
+							{
+								backgroundColor: 'lightYellow',
+								color: 'red'
+							}
+						);
+					}
+				}
+			);
+
 		}
 	);
 	console.log(obj.questions[3].title);

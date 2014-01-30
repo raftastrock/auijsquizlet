@@ -9,16 +9,10 @@ Question 1:
 			'node',
 			function(Y) {
 				var foo = Y.all('li');
-				foo.setStyles(
-					{
-						backgroundColor: 'green'
-					}
-				);
+				foo.setStyles('backgroundColor', 'green');
 			}
 		);
 	</script>
-
-	// If you are just setting one style, foo.setStyle('backgroundColor', 'green'); will do
 
 Question 2:
 	What is missing from this page to prevent AlloyUI's form-validator from working?
@@ -41,7 +35,7 @@ Question 2:
 		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 	Also <form> is needed before the input areas which are to be validated.
 
-	// Where is the js? If the user fellowed the steps in your answer it still wouldn't work because you left out implementation of the form-validator module. I'd focus more on the js than I would the html
+	// Where is the js? If the user followed the steps in your answer it still wouldn't work because you left out implementation of the form-validator module. I'd focus more on the js than I would the html
 
 Question 3:
 	How do you make use of a module's method?
