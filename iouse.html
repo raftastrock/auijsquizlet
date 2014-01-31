@@ -8,15 +8,17 @@
 
 	<body>
 		<p>This page requires Javascript to be viewed correctly.</p>
-		<div id="pagination" class="pagination pagination-centered">
-			<ul class="pagination-content">
-				<li><a href="#">Prev</a></li>
+		<div>
+			<div id="pagination" class="pagination pagination-centered">
+				<ul class="pagination-content">
+					<li><a href="#">Prev</a></li>
 
-				<li><a href="#">Next</a></li>
-			</ul>
-		</div>
-		<div id="todos" class="content">
+					<li><a href="#">Next</a></li>
+				</ul>
+			</div>
+			<div id="todos" class="content">
 
+			</div>
 		</div>
 	</body>
 
@@ -36,55 +38,73 @@
 				var startdiv = Y.one('#todos');
 				var adddiv = Y.Node.create('<div />');
 				var addh3 = Y.Node.create('<h3 />');
-					addh3.setHTML(obj.questions[i].title);
-					adddiv.set('id','page'+i);
-					adddiv.setStyle('display','none');
-					adddiv.setHTML(addh3);
-					startdiv.appendChild(adddiv);
+				addh3.setHTML(obj.questions[i].title);
+				adddiv.set('id','page'+i);
+				adddiv.setStyle('display','none');
+				adddiv.setHTML(addh3);
+				startdiv.appendChild(adddiv);
 
-					if (obj.questions[i].type === 'rearrangeList') {
-						var startol = Y.Node.create('<ul />');
-						var count = null;
-
-						for (var j = 0; obj.questions[i].data[j]; j++) {
-							var count = count + (j+1) +',';
-							var addli = Y.Node.create('<li />');
-								addli.set('id',j+1);
-								addli.setHTML(obj.questions[i].data[j]);
-								startol.appendChild(addli);
-								// startol.set('id',obj.questions[i].key); //key by which to check correct order.
-						}
-						adddiv.appendChild(startol);
-						var btn = Y.Node.create('<input />');
-							btn.set('id', obj.questions[i].key);
-							btn.setAttribute('class','btn');
-							btn.set('type','submit');
-							btn.set('value','Check!');
-							adddiv.appendChild(btn);
-						// count = count.substring(0, count.length - 1); //Adds a class equivalent to the number li
-						// startol.setAttribute('class',count);
+				if (obj.questions[i].type === 'rearrangeList') {
+					var startul = Y.Node.create('<ul />');
+					var count = null;
+					for (var j = 0; obj.questions[i].data[j]; j++) {
+						var count = count + (j+1) +',';
+						var addli = Y.Node.create('<li />');
+						addli.set('id',j+1);
+						addli.setHTML(obj.questions[i].data[j]);
+						startul.appendChild(addli);
 					}
-
+					adddiv.appendChild(startul);
+					var btn = Y.Node.create('<input />');
+					btn.set('id', obj.questions[i].key);
+					btn.setAttribute('class','btn');
+					btn.set('type','submit');
+					btn.set('value','Check!');
+					adddiv.appendChild(btn);
+					var dnd = startul.ancestor('div');
+					dnd.setAttribute('class','dnd');
+				}
 				if (obj.questions[i].type === 'trueFalse') {
+					var startol = Y.Node.create('<ol />');
+					var count = null;
+					for (var j = 0; obj.questions[i].data[j]; j++) {
+						var count = count + (j+1) +',';
+						var addli = Y.Node.create('<li />');
+						addli.setHTML(obj.questions[i].data[j]);
+						var btn = Y.Node.create('<input />');
+						btn.set('name',j+1);
+						btn.setAttribute('class','btn ');
+						btn.set('value',obj.questions[i].data[j]);
+						btn.set('type','button');
+						addli.appendChild(btn);
+						startol.appendChild(addli);
+					}
+					adddiv.appendChild(startol);
+					var tof = startol.ancestor('div');
+					tof.setAttribute('class','tof');
+				}
+				if (obj.questions[i].type === 'rearrangeBlock') {
+
 				}
 			}
 
-			//Count content divs for pagination
+			//Pagination
 			var gen = Y.all('.content > div');
 			var contentcount = null;
-				contentcount = gen.getDOMNodes().length;
-
+			contentcount = gen.getDOMNodes().length;
 			var startgen = Y.one('.pagination-content li');
+
 			for (var i = contentcount; i > 0; i--) {
 				var p = Y.Node.create('<li />');
 				var q = Y.Node.create('<a />');
-					q.set('href', '#');
-					q.setHTML(Number(i));
-					p.setHTML(q);
-					startgen.placeAfter(p);
+				q.set('href', '#');
+				q.setHTML(Number(i));
+				p.setHTML(q);
+				startgen.placeAfter(p);
 			}
 
 			var pages = Y.all('.content div');
+
 			new Y.Pagination(
 				{
 					boundingBox: '#pagination',
@@ -93,13 +113,12 @@
 					on: {
 						changeRequest: function(event) {
 							var instance = this,
-								state = event.state,
-								lastState = event.lastState;
+							state = event.state,
+							lastState = event.lastState;
 
 							if (lastState) {
 								pages.item(lastState.page - 1).setStyle('display', 'none');
 							}
-
 							pages.item(state.page - 1).setStyle('display', 'block');
 						}
 					},
@@ -107,37 +126,48 @@
 				}
 			).render();
 
+			//Make lists sortable
 			new Y.SortableList(
 				{
 					dropCondition: function(event) {
 						return true;
 					},
 					dropOn: '.content',
-					nodes: '.content div li'
+					nodes: '.content .dnd li'
 				}
 			);
 
-			var node = Y.all('.btn');
+			//Make T/F boxes radio style
+			new Y.ButtonGroup(
+				{
+					boundingBox: '.tof',
+					contentBox: 'li',
+					type: 'radio'
+				}
+				).render();
+
+			//List order checking
+			var node = Y.all('.dnd .btn');
 			node.on(
 				'click',
 				function(e) {
 					var cat = e.currentTarget
 					var check = cat.getAttribute('id');
 					var lis = cat.ancestor('div');
-						lis = lis.getElementsByTagName('li')
+					lis = lis.getElementsByTagName('li')
 					var seven = lis.getAttribute('id').toString();
 					console.log(seven);//for test purposes
 					console.log(check);
-					
-					if (check == seven)
-						{
-							lis.setStyles(
-								{
-									backgroundColor: 'lightBlue',
-									color: 'green'
-								}
-							);
-						}
+
+					if (check == seven) {
+						lis.setStyles(
+							{
+								backgroundColor: 'lightBlue',
+								color: 'green'
+							}
+						);
+					}
+
 					else {
 						lis.setStyles(
 							{
@@ -148,7 +178,6 @@
 					}
 				}
 			);
-
 		}
 	);
 	</script>
