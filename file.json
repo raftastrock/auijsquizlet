@@ -3,7 +3,27 @@ var obj = {
 		"1": {
 			"title": "Rearrange the blocks to make this code work.",
 			"type": "rearrangeBlock",
-			"data": ""
+			"key": "",
+			"data": {
+				"1": [
+					"'Sample Content'",
+					"'Sample Content'",
+					"'Sample Contentl'",
+					"'Sample Content'"
+				],
+				"2": [
+					"'Addtional Content'",
+					"'Addtional Content'",
+					"'Addtional Content'",
+					"'Addtional Content'"
+				],
+				"3": [
+					"'Final Content'",
+					"'Final Content'",
+					"'Final Content'",
+					"'Final Content'"
+				]
+			}
 		},
 		"2": {
 			"title": "Drag the list items to the appropriate spot.",
@@ -41,7 +61,11 @@ var obj = {
 		"5": {
 			"title": "Which of these statements is true?",
 			"type": "trueFalse",
-			"data": ""
+			"data": [
+				"First statement.",
+				"Second statement.",
+				"Third statement."
+			]
 		},
 		"6": {
 			"title": "Drag the list items to the appropriate spot.",
@@ -58,7 +82,11 @@ var obj = {
 		"7": {
 			"title": "Which of these statements is true?",
 			"type": "trueFalse",
-			"data": ""
+			"data": [
+				"First statement.",
+				"Second statement.",
+				"Third statement."
+			]
 		}
 	}
 }
