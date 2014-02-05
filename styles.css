@@ -1,0 +1,34 @@
+body {
+	margin: 0 25%;
+	width 960px;
+}
+
+.blocklet {
+	background-color: #EAEAEE;
+	border: 1px solid #DADADE;
+	border-top-color: #F0F0FE;
+	cursor: move;
+	margin: 5px 0;
+	padding: 0 10px;
+}
+
+.column {
+	background-color: #F7F7F7;
+	border: 1px solid #EEE;
+	clear: none;
+	float: left;
+	margin: 10px 5px;
+	padding: 10px;
+	width: 22%;
+}
+
+.columnsections li{
+	list-style-type: none;
+	padding: 3px;
+	font-size: 114%;
+	-moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
+	-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
+	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
+	cursor: move;
+}
+

@@ -34,7 +34,19 @@ Question 2:
 		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
 		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 	Also <form> is needed before the input areas which are to be validated.
-
+	Finally, and equally important, you need a <script> section which will run the alloy instance. The script would look something like this:
+	<script>
+		YUI().use(
+			'form-validator',
+			function(Y) {
+				new Y.FormValidator(
+					{
+					boundingBox: '<some node which encloses the form to be checked>'
+					}
+				);
+			}
+		);
+	</script>
 	// Where is the js? If the user followed the steps in your answer it still wouldn't work because you left out implementation of the form-validator module. I'd focus more on the js than I would the html
 
 Question 3:
@@ -61,17 +73,32 @@ Question 5:
 	// This is called 'escaping'
 
 Question 6:
-	What is a resource you can check to see how an AUI module works?
+	You're using Alloy UI to add Tabview to a page, how would you script to get a list of selected child widgets from the tab in view?
 
 -Answer
-	Check at http://alloyui.com/api/  This is the go-to place for reading both modules and classes handled by AlloyUI. Requires an understanding of "methods" "properties" and "events". Much of the information is DOM related.
+	Check at http://alloyui.com/api/  This is the go-to place for reading both modules and classes used by AlloyUI. Requires an understanding of "methods" "properties" and "events". Much of the information is DOM related.
 
-	// Maybe reform this into a question that requires the user to look up a class on the API docs or alloyui.com, something that's not as one dimensional
+	For the question, you would need to use the selection attribute for Tabview class. So in the example for your tab, tabview.get('selection') would provide you with either a single child widget, or an array of widgets related to the sele
+
+	Additionally, because AUI is built on top of YUI, you can reference the YUI site for even more help (though there are some differences).
 
 Question 7:
-	What is the difference between "Y.Node.create('<div />')" and "node.setHTML('<div />')"
+	What is the difference between "Y.Node.create('<div> </div>')" and "node.setHTML('<div> </div>')"
 
-	// a self closing div tag is not proper html syntax according to various specifications, best not confuse people
+	You have code that is: 
+	<div>
+		<p>All the wild horses.<p>
+	</div>
+
+	And want to change it to have an additional paragraph. How would you do this using Y.Node.create, node.setHTML and append?
+
+	A: 	var divcatch = Y.one(div); //grabs the first (and this case, only) div and assigns it a node instance of divcatch.
+		newnode = Y.Node.create(<p>Lose to the Atlantic Ocean.</p>); //creates a new node with the content within.
+		newnode.append(divcatch); //appends the newly created node 'newnode' to 'divcatch' essentially making:
+		<div>
+			<p>All the wild horses.</p>
+			<p>Lose to the Atlantic Ocean.</p>
+		</div>
 
 -Answer
 	The first "Y.Node.create('<div />')" is for creating a new code, and is usually assigned to a variable.

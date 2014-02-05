@@ -3,10 +3,10 @@ var obj = {
 		"1": {
 			"title": "Rearrange the blocks to make this code work.",
 			"type": "rearrangeBlock",
-			"key": "",
+			"key": "14,22,31,13,23,11,13,21,32,33,12,24",
 			"data": {
 				"1": [
-					"'Sample Content'",
+					"<'div'>",
 					"'Sample Content'",
 					"'Sample Contentl'",
 					"'Sample Content'"
@@ -39,11 +39,14 @@ var obj = {
 		},
 		"3": {
 			"title": "Which of these statements is true?",
+			"situation": "",
 			"type": "trueFalse",
+			"key": "3",
 			"data": [
 				"First statement.",
 				"Second statement.",
-				"Third statement."
+				"Third statement.",
+				"Fourth statement."
 			]
 		},
 		"4": {

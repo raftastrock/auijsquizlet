@@ -3,7 +3,8 @@
 	<head>
 		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
 		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
-		
+		<link href="styles.css" rel="stylesheet"></link>
+
 		<script src="file.json" name="obj"></script>
 	</head>
 
@@ -70,23 +71,40 @@
 					var dnd = startul.ancestor('div');
 					dnd.setAttribute('class', 'dnd');
 				}
+
 				if (obj.questions[i].type === 'rearrangeBlock') {
 					var startddiv = Y.Node.create('<div />');
-					startddiv.setAttribute('class', 'columnsections '+'yui3-g');
+					startddiv.setAttribute('class', 'columnsections '+'span9');
 					for (var j = 1; obj.questions[i].data[j]; j++) {
 						var colbound = Y.Node.create('<div />');
-						colbound.setAttribute('class', 'colbound ' + 'column ' +"yui3-u-1-3");
+						colbound.setAttribute('class', 'colbound ' + 'column');
 						colbound.setHTML('Column '+j);
 						for (var k = 0; obj.questions[i].data[j][k]; k++) {
 							var addli = Y.Node.create('<li />');
-							addli.setAttribute('class', 'portlet');
+							addli.setAttribute('class', 'blocklet');
 							addli.setHTML(obj.questions[i].data[j][k]);
+							addli.set('id',j.toString()+(k+1).toString());
 							colbound.appendChild(addli);
 						}
 						startddiv.appendChild(colbound);
 					}
 					adddiv.appendChild(startddiv);
+					var btn = Y.Node.create('<input />');
+					btn.setAttribute('class','btn');
+					btn.setAttrs(
+						{
+							'id': obj.questions[i].key,
+							'type': 'submit',
+							'value': 'Check!'
+						}
+					);
+					var br = Y.Node.create('<br/>');
+					adddiv.appendChild(btn);
+					var rrblck = colbound.ancestor('div');
+					br.appendTo('.btn');
+					rrblck.setAttribute('class', 'rrblck');
 				}
+
 				if (obj.questions[i].type === 'trueFalse') {
 					var startol = Y.Node.create('<ol />');
 					for (var j = 0; obj.questions[i].data[j]; j++) {
@@ -94,12 +112,12 @@
 						addli.setHTML(obj.questions[i].data[j]);
 
 						var btn = Y.Node.create('<input />');
-						btn.setAttribute('class','btn ');
+						btn.setAttribute('class','btn mini-btn');
 						btn.setAttrs(
 							{
 								'name': j+1,
 								'value': 'Select',
-								'type': 'checkbox'
+								'type': 'button'
 							}
 						);
 						startol.appendChild(addli);
@@ -108,6 +126,17 @@
 					adddiv.appendChild(startol);
 					var tof = startol.ancestor('div');
 					tof.setAttribute('class','tof');
+					var btn = Y.Node.create('<input />');
+					btn.setAttribute('class','btn');
+					btn.setAttrs(
+						{
+							'id': obj.questions[i].key,
+							'type': 'submit',
+							'value': 'Check!'
+						}
+					);
+					var br = Y.Node.create('<br/>');
+					adddiv.appendChild(btn);
 				}
 
 			}
@@ -152,13 +181,79 @@
 
 			//Sortable Layout
 			var proxyNode = Y.Node.create('<div class="sortable-layout-proxy"></div>');
-			var DDM = Y.DD.DDM;
 
-			var sortableLayout = new Y.SortableLayout(
+			new Y.SortableLayout(
 				{
-					dragNodes: '.portlet',
+					dragNodes: '.blocklet',
 					dropContainer: '.columnsections',
 					proxyNode: proxyNode
+				}
+			);
+			//T/F Section
+			var radiotf = Y.all('.tof ol input');
+			radiotf.on(
+				'click',
+				function(e) {
+					var clicked = e.currentTarget;
+					clicked.radioClass('active');
+				}
+			);
+
+			var tfcheck = Y.all('.tof > input');
+			tfcheck.on(
+				'click',
+				function(e) {
+					var clicked = e.currentTarget;
+					var n = clicked.getAttribute('id');
+					var m = clicked.ancestor('div');
+					m = m.all('.active');
+					m = m.getAttribute('name').toString();
+
+					console.log(m);
+
+					if (m == n) {
+						var p = clicked.ancestor('div');
+						p = p.all('.active');
+						p.setAttribute('class','btn btn-success disabled');
+						p.setAttribute('value','Correct!');
+					}
+					else {
+						var p = clicked.ancestor('div');
+						p = p.all('.active');
+						p.setAttribute('class','btn btn-danger disabled');
+						p.setAttribute('value','Wrong');
+					}
+				})
+
+			//Doesn't work yet.
+			var noderablck = Y.all('.rrblck .btn');
+			noderablck.on(
+				'click',
+				function(e) {
+					var clicked = e.currentTarget;
+					var key = clicked.getAttribute('id');
+					var lis = clicked.ancestor('div');
+					lis = lis.getElementsByTagName('div li');
+					var strlis = lis.getAttribute('id').toString();
+					console.log(lis);
+
+					if (key == strlis) {
+						lis.setStyles(
+							{
+								backgroundColor: 'lightBlue',
+								color: 'green'
+							}
+						);
+					}
+
+					else {
+						lis.setStyles(
+							{
+								backgroundColor: 'lightYellow',
+								color: 'red'
+							}
+						);
+					}
 				}
 			);
 
