@@ -14,6 +14,18 @@ Question 1:
 		);
 	</script>
 
+	Bonus info! You can set multiple styles by making a series like so:
+		var foo =Y.all('li');
+		foo.setStyles(
+			{
+				'backgroundColor': 'green',
+				'color': 'white',
+				'width': '300px'
+				etc..
+			}
+		);
+	Be careful doing this though. Not everything can be set this way, in some cases you'll want to use setAttrs(), setAttribute(), set(), or setHtml(). Be sure and explore these options. Try things out, find out what breaks and what works.
+
 Question 2:
 	What is missing from this page to prevent AlloyUI's form-validator from working?
 	<!doctype html>
@@ -33,21 +45,37 @@ Question 2:
 	Standard practice says that the <head> portion should have links to Alloy UI's script bases. Remember these?:
 		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
 		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
-	Also <form> is needed before the input areas which are to be validated.
-	Finally, and equally important, you need a <script> section which will run the alloy instance. The script would look something like this:
-	<script>
-		YUI().use(
-			'form-validator',
-			function(Y) {
-				new Y.FormValidator(
-					{
-					boundingBox: '<some node which encloses the form to be checked>'
-					}
-				);
-			}
-		);
-	</script>
-	// Where is the js? If the user followed the steps in your answer it still wouldn't work because you left out implementation of the form-validator module. I'd focus more on the js than I would the html
+	Also <form> is needed before the input areas which are to be validated. This is kind-of a "gotcha" of the question, sometimes requirements like this can be very frustrating to discover.
+	Finally, and equally important, you need a <script> section which will run the alloy instance. Here's a fully functional example:
+
+	<html>
+		<head>
+			<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+			<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+		</head>
+		<body>
+			<form id="counter">
+				<div class="control-group">
+					<h3>There's plenty of room in Texas, you know?</h3>
+					<input name="text" id="retort" class="field-required" placeholder="Insert your clever reply here." style="width: 60%" type="text"/>
+					<br />
+					<input class="btn" type="submit" value="Booyah!" />
+				</div>
+			</form>
+		</body>
+		<script>
+			YUI().use(
+				'aui-form-validator',
+				function(Y) {
+					new Y.FormValidator(
+						{
+						boundingBox: '#counter'
+						}
+					);
+				}
+			);
+		</script>
+	</html>
 
 Question 3:
 	How do you make use of a module's method?
@@ -61,16 +89,14 @@ Question 4:
 	What does AJAX stand for and how is it used?
 
 -Answer
-	AJAX stands for Asynchronous JavaScript and XML. It is used to exchange information between server and client without requiring a page to be refreshed/reloaded. On-demand information pulling/pushing. For further information, here's the wikipedia article: http://en.wikipedia.org/wiki/Ajax_(programming)
+	AJAX stands for Asynchronous JavaScript and XML. It is used to exchange information between server and client without requiring a page to be refreshed/reloaded. On-demand information pulling/pushing. For further information, here's the wikipedia article: http://en.wikipedia.org/wiki/Ajax_(programming) .
 
 Question 5:
 	What two characters aren't allowed in JSON structures (except with qualifiers)?
 
 -Answer
 	\ and "
-	To properly use these you must preface them with a '\'. Some ways to write special characters also necessitate using the \ such as \n for newline, \r for a return and \t for tab. More information on json notation and formats can be found at http://json.org
-
-	// This is called 'escaping'
+	To properly use these you must preface them with a '\'. This is called 'escaping'. Some ways to write special characters also necessitate using the \ such as \n for newline, \r for a return and \t for tab. More information on json notation and formats can be found at http://json.org 
 
 Question 6:
 	You're using Alloy UI to add Tabview to a page, how would you script to get a list of selected child widgets from the tab in view?
@@ -78,7 +104,7 @@ Question 6:
 -Answer
 	Check at http://alloyui.com/api/  This is the go-to place for reading both modules and classes used by AlloyUI. Requires an understanding of "methods" "properties" and "events". Much of the information is DOM related.
 
-	For the question, you would need to use the selection attribute for Tabview class. So in the example for your tab, tabview.get('selection') would provide you with either a single child widget, or an array of widgets related to the sele
+	For the question, you would need to use the selection attribute for Tabview class. So in the example for your tab, tabview.get('selection') would provide you with either a single child widget, or an array of widgets related to the selections.
 
 	Additionally, because AUI is built on top of YUI, you can reference the YUI site for even more help (though there are some differences).
 
@@ -92,7 +118,7 @@ Question 7:
 
 	And want to change it to have an additional paragraph. How would you do this using Y.Node.create, node.setHTML and append?
 
-	A: 	var divcatch = Y.one(div); //grabs the first (and this case, only) div and assigns it a node instance of divcatch.
+	A: 	var divcatch = Y.one(div); //grabs the first (and in this case, only) div and assigns it to a node instance of divcatch.
 		newnode = Y.Node.create(<p>Lose to the Atlantic Ocean.</p>); //creates a new node with the content within.
 		newnode.append(divcatch); //appends the newly created node 'newnode' to 'divcatch' essentially making:
 		<div>
@@ -103,6 +129,6 @@ Question 7:
 -Answer
 	The first "Y.Node.create('<div />')" is for creating a new code, and is usually assigned to a variable.
 	e.g. var node = Y.Node.create('<div />')
-	whereas node.setHTML('<div />') is for setting HTML code to something, it will overwrite whatever is there previously! A A good two hit combo in the 'node' module is first creating, then filling in with the .setHTML().
+	whereas node.setHTML('<div />') is for setting HTML code to something, it will overwrite whatever is there previously! A good two hit combo in the 'node' module is first creating, then filling in with the .setHTML().
 
 	// Again, for this I'd give the user some html, ask how to retrieve some kind of data from it, and then offer these different functions and ask which one to use.

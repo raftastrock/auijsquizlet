@@ -4,11 +4,13 @@ var obj = {
 			"title": "Rearrange the blocks to make this code work.",
 			"type": "rearrangeBlock",
 			"key": "14,22,31,13,23,11,13,21,32,33,12,24",
+			"format": "code",
+			"aceit": "",
 			"data": {
 				"1": [
-					"<'div'>",
+					"<text src='zaza.txt'/>",
 					"'Sample Content'",
-					"'Sample Contentl'",
+					"'Sample Content'",
 					"'Sample Content'"
 				],
 				"2": [
@@ -29,6 +31,7 @@ var obj = {
 			"title": "Drag the list items to the appropriate spot.",
 			"type": "rearrangeList",
 			"key": "1,4,3,2,5",
+			"aceit": "bo.txt",
 			"data": [
 				"First statement.",
 				"Second statement.",
@@ -38,10 +41,11 @@ var obj = {
 			]
 		},
 		"3": {
-			"title": "Which of these statements is true?",
+			"title": "Which one of these statements is true?",
 			"situation": "",
-			"type": "trueFalse",
+			"type": "pickOne",
 			"key": "3",
+			"aceit": "",
 			"data": [
 				"First statement.",
 				"Second statement.",
@@ -53,6 +57,7 @@ var obj = {
 			"title": "Drag the list items to the appropriate spot.",
 			"type": "rearrangeList",
 			"key": "1,2,3,4,5",
+			"aceit": "",
 			"data": [
 				"First statement.",
 				"Second statement.",
@@ -62,8 +67,11 @@ var obj = {
 			]
 		},
 		"5": {
-			"title": "Which of these statements is true?",
-			"type": "trueFalse",
+			"title": "Which one of these statements is true?",
+			"situation": "",
+			"type": "pickOne",
+			"key": "2",
+			"aceit": "",
 			"data": [
 				"First statement.",
 				"Second statement.",
@@ -74,6 +82,7 @@ var obj = {
 			"title": "Drag the list items to the appropriate spot.",
 			"type": "rearrangeList",
 			"key": "3,1,4,5,2",
+			"aceit": "",
 			"data": [
 				"First statement.",
 				"Second statement.",
@@ -83,13 +92,44 @@ var obj = {
 			]
 		},
 		"7": {
-			"title": "Which of these statements is true?",
-			"type": "trueFalse",
+			"title": "Which one of these statements is true?",
+			"situation": "",
+			"type": "pickOne",
+			"key": "1",
+			"aceit": "",
 			"data": [
 				"First statement.",
 				"Second statement.",
 				"Third statement."
 			]
+		},
+		"8": {
+			"title": "Rearrange the blocks to make this workflow(?) correct.",
+			"type": "rearrangeBlock",
+			"key": "14,22,31,13,23,11,13,21,32,33,12,24",
+			"aceit": "bo.txt",
+			"format": "text",
+			"data": {
+				"1": [
+					"Get to work.",
+					"Wake up.",
+					"Code new work.",
+					"Commit code to master."
+				],
+				"2": [
+					"Check results/peer review.",
+					"Head on home (or wherever from work).",
+					"Morning duties (hint: to do right before lunch).",
+					"Afternoon duties (hint: to do RIGHT AFTER lunch)."
+				],
+				"3": [
+					"Lunch",
+					"Snacktime.",
+					"Snacktime (again).",
+					"Sleep (not at work)."
+				]
+			}
 		}
 	}
 }
+

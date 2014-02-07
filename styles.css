@@ -1,6 +1,21 @@
 body {
 	margin: 0 25%;
 	width 960px;
+	/*background-color: #DBEAF9;*/
+}
+
+pre {
+	padding: 0;
+	margin: 5px 0;
+	text-align: center;
+}
+
+.dnd li {
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none; 
 }
 
 .blocklet {
@@ -10,6 +25,14 @@ body {
 	cursor: move;
 	margin: 5px 0;
 	padding: 0 10px;
+	list-style-type: none;
+	
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none; 
+
 }
 
 .column {
@@ -26,9 +49,6 @@ body {
 	list-style-type: none;
 	padding: 3px;
 	font-size: 114%;
-	-moz-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
-	-webkit-box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
-	box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.25);
 	cursor: move;
 }
 

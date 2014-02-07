@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
+	</head>
+	<body>
+		<form id="counter">
+			<div class="control-group">
+				<h3>There's plenty of room in Texas, you know?</h3>
+				<input name="text" id="retort" class="field-required" placeholder="Insert your clever reply here." style="width: 60%" type="text"/>
+				<br />
+				<input class="btn" type="submit" value="Booyah!" />
+			</div>
+		</form>
+	</body>
+	<script>
+		YUI().use(
+			'aui-form-validator',
+			function(Y) {
+				new Y.FormValidator(
+					{
+					boundingBox: '#counter'
+					}
+				);
+			}
+		);
+	</script>
+</html>

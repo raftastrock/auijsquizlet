@@ -2,10 +2,9 @@
 <html>
 	<head>
 		<script src="http://cdn.alloyui.com/2.0.0/aui/aui-min.js"></script>
+		<script src="file.json"></script>
 		<link href="http://cdn.alloyui.com/2.0.0/aui-css/css/bootstrap.min.css" rel="stylesheet"></link>
 		<link href="styles.css" rel="stylesheet"></link>
-
-		<script src="file.json" name="obj"></script>
 	</head>
 
 	<body>
@@ -32,7 +31,7 @@
 		'aui-button',
 		'aui-sortable-layout',
 		'aui-sortable-list',
-		'dd-constrain',
+		'aui-ace-editor',
 		function(Y) {
 			var notice = Y.one('body p');
 			notice.setStyle('display','none');
@@ -49,6 +48,36 @@
 				startdiv.appendChild(adddiv);
 
 				if (obj.questions[i].type === 'rearrangeList') {
+					if (obj.questions[i].aceit) {
+						var acediv = Y.Node.create('<div />');
+						acediv.set('id', "acediv" + i);
+						var h3find = adddiv;
+						h3find.all('h3');
+						acediv.appendTo(h3find);
+						var ace = new Y.AceEditor(
+							{
+								boundingBox: acediv,
+								height: '350',
+								width: '100%',
+								readOnly: 'true'
+							}
+						).render();
+
+						var readTextFile = function(file) {
+							var rawFile = new XMLHttpRequest();
+							rawFile.open("GET", file, true);
+							rawFile.onreadystatechange = function ()
+							{
+								if(rawFile.readyState === 4 && rawFile.status == 0)
+								{
+									var allText = rawFile.responseText;
+									ace.set('value', allText);
+								}
+							}
+							rawFile.send(null);
+						}
+						readTextFile(obj.questions[i].aceit);
+					}
 					var startul = Y.Node.create('<ul />');
 					for (var j = 0; obj.questions[i].data[j]; j++) {
 						var addli = Y.Node.create('<li />');
@@ -70,9 +99,39 @@
 					adddiv.appendChild(btn);
 					var dnd = startul.ancestor('div');
 					dnd.setAttribute('class', 'dnd');
+
 				}
 
 				if (obj.questions[i].type === 'rearrangeBlock') {
+					if (obj.questions[i].aceit) {
+						var acediv = Y.Node.create('<div />');
+						acediv.set('id', "acediv" + i);
+						var h3find = adddiv;
+						h3find.all('h3');
+						acediv.appendTo(h3find);
+						var ace = new Y.AceEditor(
+							{
+								boundingBox: acediv,
+								height: '350',
+								width: '100%',
+								readOnly: 'true'
+							}
+						).render();
+						var readTextFile = function(file) {
+							var rawFile = new XMLHttpRequest();
+							rawFile.open("GET", file, true);
+							rawFile.onreadystatechange = function ()
+							{
+								if(rawFile.readyState === 4 && rawFile.status == 0)
+								{
+									var allText = rawFile.responseText;
+									ace.set('value', allText);
+								}
+							}
+							rawFile.send(null);
+						}
+						readTextFile(obj.questions[i].aceit);
+					}
 					var startddiv = Y.Node.create('<div />');
 					startddiv.setAttribute('class', 'columnsections '+'span9');
 					for (var j = 1; obj.questions[i].data[j]; j++) {
@@ -103,9 +162,39 @@
 					var rrblck = colbound.ancestor('div');
 					br.appendTo('.btn');
 					rrblck.setAttribute('class', 'rrblck');
+
 				}
 
-				if (obj.questions[i].type === 'trueFalse') {
+				if (obj.questions[i].type === 'pickOne') {
+					if (obj.questions[i].aceit) {
+						var acediv = Y.Node.create('<div />');
+						acediv.set('id', "acediv" + i);
+						var h3find = adddiv;
+						h3find.all('h3');
+						acediv.appendTo(h3find);
+						var ace = new Y.AceEditor(
+							{
+								boundingBox: acediv,
+								height: '350',
+								width: '100%',
+								readOnly: 'true'
+							}
+						).render();
+						var readTextFile = function(file) {
+							var rawFile = new XMLHttpRequest();
+							rawFile.open("GET", file, true);
+							rawFile.onreadystatechange = function ()
+							{
+								if(rawFile.readyState === 4 && rawFile.status == 0)
+								{
+									var allText = rawFile.responseText;
+									ace.set('value', allText);
+								}
+							}
+							rawFile.send(null);
+						}
+						readTextFile(obj.questions[i].aceit);
+					}
 					var startol = Y.Node.create('<ol />');
 					for (var j = 0; obj.questions[i].data[j]; j++) {
 						var addli = Y.Node.create('<li />');
@@ -124,8 +213,8 @@
 						startol.appendChild(btn);
 					}
 					adddiv.appendChild(startol);
-					var tof = startol.ancestor('div');
-					tof.setAttribute('class','tof');
+					var pickone = startol.ancestor('div');
+					pickone.setAttribute('class','pickone');
 					var btn = Y.Node.create('<input />');
 					btn.setAttribute('class','btn');
 					btn.setAttrs(
@@ -135,10 +224,9 @@
 							'value': 'Check!'
 						}
 					);
-					var br = Y.Node.create('<br/>');
 					adddiv.appendChild(btn);
-				}
 
+				}
 			}
 
 			//Pagination
@@ -190,7 +278,7 @@
 				}
 			);
 			//T/F Section
-			var radiotf = Y.all('.tof ol input');
+			var radiotf = Y.all('.pickone ol input');
 			radiotf.on(
 				'click',
 				function(e) {
@@ -199,7 +287,7 @@
 				}
 			);
 
-			var tfcheck = Y.all('.tof > input');
+			var tfcheck = Y.all('.pickone > input');
 			tfcheck.on(
 				'click',
 				function(e) {
