@@ -1,43 +1,27 @@
 var obj = {
 	"questions": {
 		"1": {
-			"title": "Rearrange the blocks to make this code work.",
-			"type": "rearrangeBlock",
-			"key": "14,22,31,13,23,11,13,21,32,33,12,24",
-			"format": "code",
+			"title": "Which one of these statements is true?",
+			"situation": "",
+			"type": "pickOne",
+			"key": "3",
 			"aceit": "",
-			"data": {
-				"1": [
-					"<text src='zaza.txt'/>",
-					"'Sample Content'",
-					"'Sample Content'",
-					"'Sample Content'"
-				],
-				"2": [
-					"'Addtional Content'",
-					"'Addtional Content'",
-					"'Addtional Content'",
-					"'Addtional Content'"
-				],
-				"3": [
-					"'Final Content'",
-					"'Final Content'",
-					"'Final Content'",
-					"'Final Content'"
-				]
-			}
-		},
-		"2": {
-			"title": "Drag the list items to the appropriate spot.",
-			"type": "rearrangeList",
-			"key": "1,4,3,2,5",
-			"aceit": "bo.txt",
 			"data": [
 				"First statement.",
 				"Second statement.",
 				"Third statement.",
-				"Fourth statement.",
-				"Fifth statment."
+				"Fourth statement."
+			]
+		},
+		"2": {
+			"title": "Which elements are missing from this code to prevent form-validator from working?",
+			"type": "pickOne",
+			"key": "2",
+			"aceit": "assets/q2.txt",
+			"data": [
+				"Initializing scripts/links.",
+				"Second statement.",
+				"Third statement."
 			]
 		},
 		"3": {
@@ -107,8 +91,7 @@ var obj = {
 			"title": "Rearrange the blocks to make this workflow(?) correct.",
 			"type": "rearrangeBlock",
 			"key": "14,22,31,13,23,11,13,21,32,33,12,24",
-			"aceit": "bo.txt",
-			"format": "text",
+			"aceit": "bok.txt",
 			"data": {
 				"1": [
 					"Get to work.",
